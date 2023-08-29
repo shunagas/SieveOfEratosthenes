@@ -17,9 +17,23 @@ namespace SieveOfEratosthenes
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            int entNumber = int.Parse(NumberBox.Text);
-            CheckPrimes(entNumber);
-            DisplayPrime();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(NumberBox.Text))
+                {
+                    MessageBox.Show("Please enter an integer", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int entNumber = int.Parse(NumberBox.Text);
+                CheckPrimes(entNumber);
+                DisplayPrime();
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+
+            btnEnter.Enabled = false;   
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -27,6 +41,8 @@ namespace SieveOfEratosthenes
             NumberBox.Clear();
             Primelst.Text = "";
             Counter.Text = "";
+            primeNumbers.Clear();
+            btnEnter.Enabled = true;
         }
 
         private void NumberBox_KeyPress(object sender, KeyPressEventArgs e)
